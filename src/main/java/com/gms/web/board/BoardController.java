@@ -13,18 +13,18 @@ public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	@RequestMapping("/write")
 	public String boardWrite(Model model) {
-		return "public:board/board_write.tiles";
+		return "auth:board/board_write.tiles";
 	}
 	@RequestMapping("/list")
 	public String boardList(Model model) {
-		return "public:board/board_list.tiles";
+		return "auth:board/board_list.tiles";
 	}
 	@RequestMapping("/detail")
 	public String boardDetail(Model model) {
-		return "public:board/board_detail.tiles";
+		return "auth:board/board_detail.tiles";
 	}
 	@RequestMapping("/delete")
 	public String boardDelete(Model model) {
-		return "public:board/board_delete.tiles";
+		return "auth:board/board_delete.tiles";
 	}
 }

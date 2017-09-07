@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="../common/navbar.jsp"/>
 <div id="container">
 	<div id="login_box">
 		<img src="<%=request.getContextPath()%>/img/login.jpg" alt="" /><br />

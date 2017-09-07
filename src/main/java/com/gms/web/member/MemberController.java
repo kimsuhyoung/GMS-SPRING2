@@ -13,18 +13,18 @@ public class MemberController {
 	
 	@RequestMapping("/add")
 	public String mainadd(Model model) {
-		return "public:member/member_add.tiles";
+		return "auth:member/member_add.tiles";
 	}
 	@RequestMapping("/list")
 	public String mainList(Model model) {
-		return "public:member/member_list.tiles";
+		return "auth:member/member_list.tiles";
 	}
 	@RequestMapping("/detail")
 	public String mainDetail(Model model) {
-		return "public:member/member_detail.tiles";
+		return "auth:member/member_detail.tiles";
 	}
 	@RequestMapping("/delete")
 	public String mainDelete(Model model) {
-		return "public:member/member_delete.tiles";
+		return "auth:member/member_delete.tiles";
 	}
 }

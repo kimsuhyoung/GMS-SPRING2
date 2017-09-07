@@ -1,5 +1,4 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<jsp:include page="../common/navbar.jsp"/>
 <h1>board write</h1>
 <div id="container">
 	<form action="" method="get" >

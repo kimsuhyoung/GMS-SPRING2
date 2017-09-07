@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-p"/>
-<jsp:include page="../common/navbar.jsp"/>
+
 <h1>board list</h1>
 <div id="container">
 	<table border=1 style="border-collapse: collapse; width: 100%;">

@@ -1,4 +1,4 @@
-package com.gms.web.common;
+package com.gms.web.auth;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,11 +18,11 @@ public class AuthController {
 
 	@RequestMapping("/login")
 	public String login() {
-		return "public:common/main.tiles";
+		return "auth:common/main.tiles";
 	}
 	@RequestMapping("/main")
 	public String home() {
-		return "public:common/main.tiles";
+		return "auth:common/main.tiles";
 	}
 	
 	
