@@ -2,8 +2,8 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.gms.web.mapper.grade.GradeMapper">
-  <select id="selectById" resultType="GradeDTO">
-    select * from Grade where id = #{id}
+<mapper namespace="com.gms.web.mapper.GradeMapper">
+  <select id="selectById" resultType="com.gms.web.grade.GradeDTO">
+    select * from Grade where grade_seq = #{grade_seq}
   </select>
 </mapper>

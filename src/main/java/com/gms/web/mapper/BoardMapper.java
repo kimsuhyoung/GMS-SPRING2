@@ -13,5 +13,5 @@ public interface BoardMapper {
 	public ArticleDTO selectBySeq(String seq);
 	public String count();
 	public String update(ArticleDTO bean);
-	public String delete(String seq); 
+	public String delete(String seq);
 }
