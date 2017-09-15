@@ -10,7 +10,6 @@ var app=app || {};
 	};
 	var onCreate=function(){
 		setContentView();
-		location.href=ctx()+"/auth/login_view";
 	};
 	var setContentView=function(){
 	};

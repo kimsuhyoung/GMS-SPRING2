@@ -38,10 +38,10 @@ public class HomeController {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
 		String formattedDate = dateFormat.format(date);
-		
 		model.addAttribute("serverTime", formattedDate );
 		model.addAttribute("path",PathFactory.create());
-		return "public:common/home.tiles";
+
+		return "index";
 	}
 	
 }
