@@ -12,18 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class GradeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(GradeController.class);
-	@RequestMapping("/add")
-	public String gradeWrite(Model model) {
-		return "auth:grade/grade_add.tiles";
-	}
-	@RequestMapping("/list")
-	public String gradeList(Model model) {
-		return "auth:grade/grade_list.tiles";
-	}
-	@RequestMapping("/detail")
-	public String gradeDetail(Model model) {
-		return "auth:grade/grade_detail.tiles";
-	}
+
 	@RequestMapping("/delete")
 	public String gradeDelete(Model model) {
 		return "auth:grade/grade_delete.tiles";

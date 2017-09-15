@@ -11,18 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 public class BoardController {
 	private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
-	@RequestMapping("/write")
-	public String boardWrite(Model model) {
-		return "auth:board/board_write.tiles";
-	}
-	@RequestMapping("/list")
-	public String boardList(Model model) {
-		return "auth:board/board_list.tiles";
-	}
-	@RequestMapping("/detail")
-	public String boardDetail(Model model) {
-		return "auth:board/board_detail.tiles";
-	}
+
 	@RequestMapping("/delete")
 	public String boardDelete(Model model) {
 		return "auth:board/board_delete.tiles";

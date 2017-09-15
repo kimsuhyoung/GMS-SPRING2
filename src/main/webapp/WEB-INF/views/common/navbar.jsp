@@ -41,8 +41,8 @@
           </ul>
         </li>
     </ul>
-    <span class="float-right">${sessionScope.user.name} &nbsp;
-    	<a id="logout" onclick="logout('common','home')" style="color: white">로그아웃</a></span>
+    <span class="float-right">${user.name} &nbsp;
+    	<a id="logout" style="color: white">로그아웃</a></span>
   </div>
 </nav>
 <script>
@@ -67,13 +67,13 @@
     }
     window.addEventListener('load',test,false); */
     /*add */
-    function memberAdd(){
+  /*   function memberAdd(){
     	var form=document.getElementById('join_form');
     	form.setAttribute('action','${ctx}/member.do');
     	form.setAttribute('method','post');
     	form.submit();
     	return true;
-    }
+    } */
 
 </script>
 

@@ -1,4 +1,4 @@
-package com.gms.web.member;
+	package com.gms.web.member;
 
 import java.util.List;
 import java.util.Map;
@@ -11,12 +11,13 @@ import com.gms.web.member.StudentDTO;
 
 @Component
 public interface MemberService {
-	public String add(Map<String,Object> map);
+	 /*int add(MemberDTO member)*/
+	public int add(Map<?,?> map);
 	public List<?> list(CommandDTO cmd);
 	public List<?> findByName(CommandDTO cmd);
 	public StudentDTO findById(CommandDTO cmd);
-	public String count(CommandDTO cmd);
-	public String modify(MemberDTO bean);
-	public String remove(CommandDTO cmd);
-	public Map<String,Object> login(MemberDTO bean);
+	public String count();
+	public int modify(MemberDTO bean);
+	public int remove(CommandDTO cmd);
+	public Map<String,Object> login(CommandDTO cmd);
 }

@@ -3,6 +3,7 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.gms.web.constant.*;
+import com.gms.web.member.MemberDTO;
 
 import lombok.Data;
 
@@ -10,10 +11,13 @@ import lombok.Data;
 public class CommandDTO implements Commandable{
 	
 	protected String action,pageNumber,
-		view,column,search;
+		view,column,search,id,pass;
+	
+	protected MemberDTO member;
+	
 	
 	protected String dir,startRow,endRow,
-		page,id;
+		page;
 	
 	public void setPageNumber(String pageNumber){
 		this.pageNumber = 

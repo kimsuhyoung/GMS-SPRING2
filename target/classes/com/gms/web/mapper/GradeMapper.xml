@@ -6,4 +6,13 @@
   <select id="selectById" resultType="com.gms.web.grade.GradeDTO">
     select * from Grade where grade_seq = #{grade_seq}
   </select>
+  
+  <insert id="insertMajor" parameterType="java.util.List">
+		insert into major(major_id,title,subj_id,member_id)
+		values
+		<foreach collection="list" item="i" separator=",">
+		(#{i.majorId},#{i.subjId},#{i.title},#{i.id})
+		</foreach>  
+		
+	</insert>
 </mapper>

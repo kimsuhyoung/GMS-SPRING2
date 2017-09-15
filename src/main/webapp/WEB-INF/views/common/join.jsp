@@ -1,17 +1,18 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <div id="container">
-	<form id="join_form" action="member_detail.jsp" method="get">
+	<div style="font-size: 20px;width: 150px; height: 20px; margin: 0 auto;color: red;">${result}</div>
+	<form id="join_form">
 		<fieldset>
 		<legend>관리자 등록</legend>
 		<span id="join_id">ID: </span>
-		<input name="id" type="text" placeholder="아이디" /><br />
-		<span id="join_pass">PASSWORD: </span>
+		<input name="id" name="id" type="text" placeholder="아이디" /><br />
+		<span id="join_pass" name="">PASSWORD: </span>
 		<input name="password" type="password" placeholder="비밀번호"/><br />
 		<span id="join_name">NAME: </span>
-		<input name="name" type="text" placeholder="이름"/><br />
+		<input name="name" name="name" type="text" placeholder="이름"/><br />
 		<span id="join_birth">생년월일</span>
-		<input name="birthday"   type="date" /><br />
+		<input name="birthday" name="ssn"  type="date" /><br />
 		<input type="radio" name="gender" value="male" /> 남자
 		<input type="radio" name="gender" value="female" /> 여자
 		<br />
@@ -36,3 +37,6 @@
 		</fieldset>
 	</form>
 </div>
+<script>
+
+</script>

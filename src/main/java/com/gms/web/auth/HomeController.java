@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import com.gms.web.complex.PathFactory;
@@ -21,6 +22,7 @@ import com.gms.web.complex.PathFactory;
  * Handles requests for the application home page.
  */
 @Controller
+@SessionAttributes("path")
 public class HomeController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);//우리가 저장을 하면 .java이지만 톰캣에서 컴파일되면 클래스파일로 바뀐다.
@@ -38,7 +40,7 @@ public class HomeController {
 		String formattedDate = dateFormat.format(date);
 		
 		model.addAttribute("serverTime", formattedDate );
-		session.setAttribute("path",PathFactory.create());
+		model.addAttribute("path",PathFactory.create());
 		return "public:common/home.tiles";
 	}
 	

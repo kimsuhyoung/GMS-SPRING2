@@ -1,5 +1,7 @@
 package com.gms.web.grade;
 
+import java.util.List;
+
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -7,8 +9,8 @@ import lombok.Data;
 
 @Lazy @Component @Data
 public class MajorDTO {
-	private String majorId,
-	title, id, subjId;
+	private String majorId,title, id, subjId;
+	
 
 	public String getMajorId() {
 		return majorId;
