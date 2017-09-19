@@ -19,181 +19,56 @@ meta.common=(function(){
 })();
 
 meta.index=(function(){
-	var $image,$navbar,$container;
+	var $image,$navbar,$container,ctx,img,js,css,temp,algo;
 	var init=function(){
+		js=$$('j');
+		temp=js+'/template.js';
+		algo=js+'/algo.js';
 		onCreate();
 		meta.ui.init();
 	};
 		
 	var onCreate=function(){	
 		setContentView();
-		$('#button').on('click',function(){//펑션을 이벤트핸들러 또는 콜백 함수라고 한다.
+		$('#button').click(()=>{//펑션을 이벤트핸들러 또는 콜백 함수라고 한다.
 			alert('화면이 지워집니다.');
 			$container.empty();
 			/*meta.auth.init();*/
 			meta.ui.navbar();
+			meta.navbar.init();
 			meta.ui.arithmetic();
 			$('#start_num_text').val('1');
 			$('#last_num_text').val('100');
 			$('#algo_button').on('click',function(){					
-				$('#result').text('결과값 : ' + meta.algo.arithmetic($('#start_num_text').val(),$('#last_num_text').val()));
-			});
-			$('#arithBtn').on('click',function(){
-				alert('등차수열 클릭');
-				$('#content').remove();
-				meta.ui.arithmetic();
-			/*	$('#start_num_text').val('1');
-				$('#last_num_text').val('100');*/
-				$('#start_num_text').val('1').attr('readonly','true');
-				$('#last_num_text').val('100').attr('readonly','true');
-				$('#algo_button').click(()=>{					
-					$('#result').text('결과값 : ' + meta.algo.arithmetic());
-				});
-			});
-			$('#switchBtn').on('click',function(){
-				alert('스위치수열 클릭');
-				$('#container').empty();
-				/*$('#content').remove();*/
-				meta.ui.arithmetic();
-				/*$('h1').empty();*/
-				/*$('h1').text('스위치수열의 합');*/
-				$('h1').html('스위치수열의 합');//엠티와,텍스트를 합친 역할을 한다.//여기에 스트링값이 아니라 돔객체가 들어오면 object로만 표시된다.
-				/*$('#start_num_text').val('1');*/
-			/*	$('#start_num_text').attr('value','1');//위에것과 같다. val()=파라미터 안의 값이 없으면 게터, 값이 있으면 세터의 역할이다.
-				$('#last_num_text').val('100');*/
-				$('#start_num_text').val('1').attr('readonly','true');//밸류값 수정못하게 하는 역할
-				$('#last_num_text').val('100').attr('readonly','true');
-				$('#algo_button').click(()=>{
-					$('#result').text('결과값 : ' + meta.algo.switchSeries())
-				});
-			/*	$('#algo_button').on('click',function(){
-					$('#result').text('결과값 : ' + meta.algo.switchSeries())
-				});*/
-			});
-			$('#geoBtn').on('click',function(){
-				alert('등비수열 클릭');
-				$('#container').empty();
-				meta.ui.arithmetic();
-				$('h1').html('계차수열의 합');
-				$('#last_num').remove();
-				$('#last_num_text').remove();
-				$('#start_num').text('항수');
-				$('#algo_button').click(()=>{;
-					$('#result').text('결과값 : ' + meta.algo.seq_of_diff())
-				});
-			});
-			$('#facBtn').on('click',function(){
-				alert('팩토리얼 클릭');
-				$('#container').empty();
-				meta.ui.arithmetic();
-				$('h1').html('팩토리얼의 합');
-				$('#last_num').remove();
-				$('#last_num_text').remove();
-				$('#start_num').text('항수');
-				$('#algo_button').click(()=>{
-					$('#result').text('결과값 : ' + meta.algo.fac())
-				});
-			});
-			$('#fiboBtn').on('click',function(){
-				alert('피보나치수열 클릭');
-				$('#container').empty();
-				meta.ui.arithmetic();
-				$('h1').html('피보나치수열의 합');
-				$('#last_num').remove();
-				$('#last_num_text').remove();
-				$('#start_num').text('항수');
-				$('#algo_button').click(()=>{
-					$('#result').text('결과값 : ' + meta.algo.fibo())
-				});
-			});
-			
+				$.getScript(algo,(x1,x2)=>{
+				$('#result').text('결과값 : ' + series.arithmetic($('#start_num_text').val(),$('#last_num_text').val()));	
+				});				
+			});											
 		});
 	};
 	
 	var setContentView=function(){
 		$container=$('#container');
 		/*$wrapper=$('#wrapper');*/
-		$ctx=$$('c');
-		$img=$$('i');
-		$image=$('<img/>',{id: 'loading', src: $img+'/loading.gif'});//제이슨은 키값과 밸류값을 같는다 키값에는 아이디,태그등을 넣어주고//어트리뷰트는 기성품(이미만들어짐) 프로퍼티는 값이 할당되기 전까지는 모른다.
-		$container.append($image);
-		/*$image.appendTo($('#wrapper'));*///appendTo 는 리턴하는 것이다.
-		var $button=$('<input/>',{id: 'button', type:'button', value:'클릭'});
-		$button.appendTo($('#container'));
+		ctx=$$('c');
+		img=$$('i');
+		$.getScript(temp,(x)=>{
+		var $image=$('<img/>',
+				intro.loading(img))
+				$container.append($image);
+			/*$image=$('<img/>',{id: 'loading', src: $img+'/loading.gif'});//제이슨은 키값과 밸류값을 같는다 키값에는 아이디,태그등을 넣어주고//어트리뷰트는 기성품(이미만들어짐) 프로퍼티는 값이 할당되기 전까지는 모른다.*/				    
+		});
+		var $button=$('<input/>',{id: 'button', type:'button', value:'클릭'})		
 		/*$('#wrapper').empty*/ // empty는 화면을 지우는 메서드
+		
+		/*$image.appendTo($('#wrapper'));*///appendTo 는 리턴하는 것이다.
+		$button.appendTo($('#container'));
 	};
 	return {
 		init : init
 		
 	};
 })();
-
-
-meta.algo={
-		arithmetic : (s,e)=>{			
-				var i=0,sum=0;
-				for(var i=0;i<=100;i++){
-					sum+=i;
-				}
-				return sum;			
-		},
-		switchSeries : ()=>{
-		var i=0,sum=0,sw=0;
-		
-		do {
-			i++;
-			if(sw==0){
-				sum+=i;
-				sw=1;
-			}else {
-				sum-=i;
-				sw=0;
-			}
-		}while(i<100)
-			return sum;
-		},
-		seq_of_diff : ()=>{
-		var i=1,diff=1,sum=0;
-		var seq=$('#start_num_text').val();
-		for(j=0;j<seq;j++){
-			console.log('i : '+i);
-			console.log('diff : '+diff);
-			console.log('sum : '+sum);
-			sum+=i;
-			i=i+diff;
-			diff=diff+1;
-		}
-		return sum
-		},
-		fac : ()=>{
-		var n=0,f=1,s=0;
-		var seq=$('#start_num_text').val();
-		console.log(seq);
-		for(var i=0;i<seq;i++){
-			n++;
-			console.log('n :'+n);
-			f=f*n;
-			console.log('f : '+f);
-			s=s+f;
-			console.log('s : '+s);
-		}
-			return s;
-		},
-		fibo : ()=>{
-			var number1=1,number2=1,sum=number1+number2,newnum=0;
-			var num=$('#start_num_text').val();
-			for(var i=1;i<num;i++){
-				newnum+=sum;
-				sum=number1+number2;
-				number1=number2;
-				number2=sum;
-			}
-			return newnum;
-		}
-		
-		
-};
-
 
 meta.auth=(function(){
 	var $wrapper,$ctx,$css,$img,$js
@@ -233,6 +108,192 @@ meta.auth=(function(){
 	return {
 		init : init
 		
+	};
+})();
+
+meta.navbar=(function(){
+	var algo,js;
+	var init=function(){
+		onCreate();
+		js=$$('j');
+		algo=js+'/algo.js';
+	};
+	var onCreate=function(){
+		setContentView();
+		$('.dropdown-menu a').eq(0).on('click',function(){
+			alert('0');
+			app.controller.moveTo('member','member_add');
+			/*location.href=app.path.ctx()+"/member/add";*/
+		});
+		$('.dropdown-menu a').eq(1).on('click',function(){
+			alert('1');
+			app.member.list(1);
+			/*location.href=app.path.ctx()+"/member/list";*/
+			/*controller.list('member','member_list','1');*/
+		});
+		$('.dropdown-menu a').eq(2).on('click',function(){
+			alert('2');
+			app.controller.moveTo('member','member_detail');
+			/*location.href=app.path.ctx()+"/member/detail";*/
+			/*controller.moveTo('member','member_detail');*/
+		});
+		$('.dropdown-menu a').eq(3).on('click',function(){
+			alert('3');
+			app.controller.deleteTarget(prompt('삭제할 ID를 입력하세요'),'member','member_list');
+			/*location.href=app.path.ctx()+"/member/delete";*/
+          /*controller.deleteStudent();*/
+		});
+		$('.dropdown-menu a').eq(4).on('click',function(){
+			alert('4');
+			app.controller.moveTo('grade','grade_add');
+			/*location.href=app.path.ctx()+"/grade/add";*/
+		});
+		$('.dropdown-menu a').eq(5).on('click',function(){
+			alert('5');
+			app.controller.moveTo('grade','grade_list');
+			/*location.href=app.path.ctx()+"/grade/list";*/
+			/*controller.list('member','member_list','1');*/
+		});
+		$('.dropdown-menu a').eq(6).on('click',function(){
+			alert('6');
+			app.controller.moveTo('grade','grade_detail');
+			/*location.href=app.path.ctx()+"/grade/detail";*/
+			/*controller.moveTo('member','member_detail');*/
+		});
+		$('.dropdown-menu a').eq(7).on('click',function(){
+			alert('7');
+			app.controller.deleteTarget(prompt('삭제할 성적을 가진 ID를 입력하세요'),'grade','grade_list');
+			/*location.href=app.path.ctx()+"/grade/delete";*/
+          /*controller.deleteStudent();*/
+		});
+		$('.dropdown-menu a').eq(8).on('click',function(){
+			alert('8');
+			app.controller.moveTo('board','board_write');
+			/*location.href=app.path.ctx()+"/board/write";*/
+		});
+		$('.dropdown-menu a').eq(9).on('click',function(){
+			alert('9');
+			app.controller.moveTo('board','board_list');
+			/*location.href=app.path.ctx()+"/board/list";*/
+			/*controller.list('member','member_list','1');*/
+		});
+		$('.dropdown-menu a').eq(10).on('click',function(){
+			alert('10');
+			app.controller.moveTo('board','board_detail');
+			/*location.href=app.path.ctx()+"/board/detail";*/
+		});
+		$('.dropdown-menu a').eq(11).on('click',function(){
+			alert('11');
+			app.controller.deleteTarget(prompt('삭제할 게시글을 가진 ID를 입력하세요'),'board','board_list');
+			/*location.href=app.path.ctx()+"/board/delete";*/
+          /*controller.deleteStudent();*/
+		});
+		$('#arithBtn').on('click',function(){
+			alert('등차수열 클릭');
+			$('#content').remove();
+			meta.ui.arithmetic();
+		/*	$('#start_num_text').val('1');
+			$('#last_num_text').val('100');*/
+			$('#start_num_text').val('1').attr('readonly','true');
+			$('#last_num_text').val('100').attr('readonly','true');
+			$('#algo_button').click(()=>{					
+				$.getScript(algo,(x1,x2)=>{
+					$('#result').text('결과값 : ' + series.arithmetic($('#start_num_text').val(),$('#last_num_text').val()));
+				});				
+			});
+		});
+		$('#switchBtn').on('click',function(){
+			alert('스위치수열 클릭');
+			$('#container').empty();
+			/*$('#content').remove();*/
+			meta.ui.arithmetic();
+			/*$('h1').empty();*/
+			/*$('h1').text('스위치수열의 합');*/
+			$('h1').html('스위치수열의 합');//엠티와,텍스트를 합친 역할을 한다.//여기에 스트링값이 아니라 돔객체가 들어오면 object로만 표시된다.
+			/*$('#start_num_text').val('1');*/
+		/*	$('#start_num_text').attr('value','1');//위에것과 같다. val()=파라미터 안의 값이 없으면 게터, 값이 있으면 세터의 역할이다.
+			$('#last_num_text').val('100');*/
+			$('#start_num_text').val('1').attr('readonly','true');//밸류값 수정못하게 하는 역할
+			$('#last_num_text').val('100').attr('readonly','true');
+			$('#algo_button').click(()=>{
+				$.getScript(algo,()=>{
+					$('#result').text('결과값 : ' + series.switchSeries())
+				})
+				
+			});
+		/*	$('#algo_button').on('click',function(){
+				$('#result').text('결과값 : ' + meta.algo.switchSeries())
+			});*/
+		});
+		$('#geoBtn').on('click',function(){
+			alert('등비수열 클릭');
+			$('#container').empty();
+			meta.ui.arithmetic();
+			$('h1').html('계차수열의 합');
+			$('#last_num').remove();
+			$('#last_num_text').remove();
+			$('#start_num').text('항수');
+			$('#algo_button').click(()=>{
+				$.getScript(algo,(x)=>{
+					$('#result').text('결과값 : ' + series.seq_of_diff($('#start_num_text').val()));	
+				});
+				
+			});
+		});
+		$('#facBtn').on('click',function(){
+			alert('팩토리얼 클릭');
+			$('#container').empty();
+			meta.ui.arithmetic();
+			$('h1').html('팩토리얼의 합');
+			$('#last_num').remove();
+			$('#last_num_text').remove();
+			$('#start_num').text('항수');
+			$('#algo_button').click(()=>{
+				$.getScript(algo,(x)=>{
+					$('#result').text('결과값 : ' + series.fac($('#start_num_text').val()))	
+				});				
+			});
+		});
+		$('#fiboBtn').on('click',function(){
+			alert('피보나치수열 클릭');
+		$('#container').empty();
+			meta.ui.arithmetic();
+			$('h1').html('피보나치수열의 합');
+			$('#last_num').remove();
+			$('#last_num_text').remove();
+			$('#start_num').text('항수');
+			$('#algo_button').click(()=>{
+				$.getScript(algo,(x)=>{
+				$('#result').text('결과값 : ' + series.fibo($('#start_num_text').val()));
+				}); //외부의 함수를 호출하는 구문
+				/*$('#result').text('결과값 : ' + series.fibo($('#start_num_text').val()));*/
+			});
+		
+		});
+		$('#home a').on('click',function(){
+			alert('home');
+			app.controller.moveTo('common','main');
+			/*location.href=app.path.ctx()+"/auth/main";*/
+		});
+		
+		$('#logout').on('click',function(){
+			alert('logout');
+			app.controller.moveTo('common','login');
+			/*location.href=app.path.ctx()+"/auth/main";*/
+		});
+	};
+	var setContentView=function(){
+		var $u1=$("#navbar_ul_stu");
+		var $u2=$("#navbar_ul_grade");
+		var $u3=$("#navbar_ul_board");
+		$u1.addClass("dropdown-menu");
+		$u2.addClass("dropdown-menu");
+		$u3.addClass("dropdown-menu");
+		var $home=$('#home');
+		var $logout=$('#logout')
+	};
+	return {
+		init : init
 	};
 })();
 
