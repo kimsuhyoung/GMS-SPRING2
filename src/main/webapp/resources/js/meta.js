@@ -19,7 +19,7 @@ meta.common=(function(){
 })();
 
 meta.index=(function(){
-	var $image;
+	var $image,$navbar,$container;
 	var init=function(){
 		onCreate();
 		meta.ui.init();
@@ -29,10 +29,12 @@ meta.index=(function(){
 		setContentView();
 		$('#button').on('click',function(){//펑션을 이벤트핸들러 또는 콜백 함수라고 한다.
 			alert('화면이 지워집니다.');
-			$wrapper.empty();
+			$container.empty();
 			/*meta.auth.init();*/
 			meta.ui.navbar();
 			meta.ui.arithmetic();
+			$('#start_num_text').val('1');
+			$('#last_num_text').val('100');
 			$('#algo_button').on('click',function(){					
 				$('#result').text('결과값 : ' + meta.algo.arithmetic($('#start_num_text').val(),$('#last_num_text').val()));
 			});
@@ -40,42 +42,84 @@ meta.index=(function(){
 				alert('등차수열 클릭');
 				$('#content').remove();
 				meta.ui.arithmetic();
-				$('#algo_button').on('click',function(){					
-					$('#result').text('결과값 : ' + meta.algo.arithmetic($('#start_num_text').val(),$('#last_num_text').val()));
+			/*	$('#start_num_text').val('1');
+				$('#last_num_text').val('100');*/
+				$('#start_num_text').val('1').attr('readonly','true');
+				$('#last_num_text').val('100').attr('readonly','true');
+				$('#algo_button').click(()=>{					
+					$('#result').text('결과값 : ' + meta.algo.arithmetic());
 				});
 			});
 			$('#switchBtn').on('click',function(){
 				alert('스위치수열 클릭');
-				$('#content').remove();
-				meta.ui.switchSeries();
-				$('#switch_btn').on('click',function(){
-					$('#result').text('결과값 : ' + meta.algo.switchSeries($('#start_text').val(),$('#last_text').val()))
+				$('#container').empty();
+				/*$('#content').remove();*/
+				meta.ui.arithmetic();
+				/*$('h1').empty();*/
+				/*$('h1').text('스위치수열의 합');*/
+				$('h1').html('스위치수열의 합');//엠티와,텍스트를 합친 역할을 한다.//여기에 스트링값이 아니라 돔객체가 들어오면 object로만 표시된다.
+				/*$('#start_num_text').val('1');*/
+			/*	$('#start_num_text').attr('value','1');//위에것과 같다. val()=파라미터 안의 값이 없으면 게터, 값이 있으면 세터의 역할이다.
+				$('#last_num_text').val('100');*/
+				$('#start_num_text').val('1').attr('readonly','true');//밸류값 수정못하게 하는 역할
+				$('#last_num_text').val('100').attr('readonly','true');
+				$('#algo_button').click(()=>{
+					$('#result').text('결과값 : ' + meta.algo.switchSeries())
 				});
+			/*	$('#algo_button').on('click',function(){
+					$('#result').text('결과값 : ' + meta.algo.switchSeries())
+				});*/
 			});
 			$('#geoBtn').on('click',function(){
 				alert('등비수열 클릭');
-				$('#content').remove();
+				$('#container').empty();
+				meta.ui.arithmetic();
+				$('h1').html('계차수열의 합');
+				$('#last_num').remove();
+				$('#last_num_text').remove();
+				$('#start_num').text('항수');
+				$('#algo_button').click(()=>{;
+					$('#result').text('결과값 : ' + meta.algo.seq_of_diff())
+				});
 			});
 			$('#facBtn').on('click',function(){
 				alert('팩토리얼 클릭');
-				$('#content').remove();
+				$('#container').empty();
+				meta.ui.arithmetic();
+				$('h1').html('팩토리얼의 합');
+				$('#last_num').remove();
+				$('#last_num_text').remove();
+				$('#start_num').text('항수');
+				$('#algo_button').click(()=>{
+					$('#result').text('결과값 : ' + meta.algo.fac())
+				});
 			});
 			$('#fiboBtn').on('click',function(){
 				alert('피보나치수열 클릭');
-				$('#content').remove();
+				$('#container').empty();
+				meta.ui.arithmetic();
+				$('h1').html('피보나치수열의 합');
+				$('#last_num').remove();
+				$('#last_num_text').remove();
+				$('#start_num').text('항수');
+				$('#algo_button').click(()=>{
+					$('#result').text('결과값 : ' + meta.algo.fibo())
+				});
 			});
 			
 		});
 	};
 	
 	var setContentView=function(){
-		$wrapper=$('#wrapper');
+		$container=$('#container');
+		/*$wrapper=$('#wrapper');*/
 		$ctx=$$('c');
 		$img=$$('i');
 		$image=$('<img/>',{id: 'loading', src: $img+'/loading.gif'});//제이슨은 키값과 밸류값을 같는다 키값에는 아이디,태그등을 넣어주고//어트리뷰트는 기성품(이미만들어짐) 프로퍼티는 값이 할당되기 전까지는 모른다.
-		$image.appendTo($('#wrapper'));//appendTo 는 리턴하는 것이다.
+		$container.append($image);
+		/*$image.appendTo($('#wrapper'));*///appendTo 는 리턴하는 것이다.
 		var $button=$('<input/>',{id: 'button', type:'button', value:'클릭'});
-		$button.appendTo($('#wrapper'));
+		$button.appendTo($('#container'));
 		/*$('#wrapper').empty*/ // empty는 화면을 지우는 메서드
 	};
 	return {
@@ -86,31 +130,67 @@ meta.index=(function(){
 
 
 meta.algo={
-		arithmetic : function(s,e){			
-				var start_num=0,last_num=0,sum=0;
-				start_num=s*1;
-				last_num=e*1;
-				for(var i=start_num;i<=last_num;i++){
+		arithmetic : (s,e)=>{			
+				var i=0,sum=0;
+				for(var i=0;i<=100;i++){
 					sum+=i;
 				}
 				return sum;			
 		},
-		switchSeries : function(s,e){
-		var start_num=0,last_num=0,j=0*1,sw=0;
-		start_num=s*1;
-		last_num=e*1;
+		switchSeries : ()=>{
+		var i=0,sum=0,sw=0;
+		
 		do {
-			start_num=start_num+1;
+			i++;
 			if(sw==0){
-				j=j+start_num;
+				sum+=i;
 				sw=1;
 			}else {
-				j=j-start_num;
+				sum-=i;
 				sw=0;
 			}
-		}while(start_num<=last_num)
-			return j;
+		}while(i<100)
+			return sum;
+		},
+		seq_of_diff : ()=>{
+		var i=1,diff=1,sum=0;
+		var seq=$('#start_num_text').val();
+		for(j=0;j<seq;j++){
+			console.log('i : '+i);
+			console.log('diff : '+diff);
+			console.log('sum : '+sum);
+			sum+=i;
+			i=i+diff;
+			diff=diff+1;
 		}
+		return sum
+		},
+		fac : ()=>{
+		var n=0,f=1,s=0;
+		var seq=$('#start_num_text').val();
+		console.log(seq);
+		for(var i=0;i<seq;i++){
+			n++;
+			console.log('n :'+n);
+			f=f*n;
+			console.log('f : '+f);
+			s=s+f;
+			console.log('s : '+s);
+		}
+			return s;
+		},
+		fibo : ()=>{
+			var number1=1,number2=1,sum=number1+number2,newnum=0;
+			var num=$('#start_num_text').val();
+			for(var i=1;i<num;i++){
+				newnum+=sum;
+				sum=number1+number2;
+				number1=number2;
+				number2=sum;
+			}
+			return newnum;
+		}
+		
 		
 };
 
@@ -157,12 +237,12 @@ meta.auth=(function(){
 })();
 
 meta.ui=(function(){
-	var $wrapper,$ctx,$css,$img,$js
+	var $wrapper,$ctx,$css,$img,$js,$container,$navbar;
 	var init=function(){
-		$wrapper=$('#wrapper');$ctx=$$('x');$css=$$('c');$img=$$('i');$js=$$('j');
+		$wrapper=$('#wrapper');$ctx=$$('x');$css=$$('c');$img=$$('i');$js=$$('j');$navbar=$('#navbar');$container=$('#container');
 	};
 	var navbar= function(){//dom객체에서 append(dom에 dom을 붙이는것),html(html코딩과 같다) 
-		$wrapper.html(		
+		$navbar.html(		
 	'<nav class="navbar navbar-inverse">'
 	+'<div class="container-fluid">'
 	+'<div class="navbar-header">'
@@ -233,7 +313,8 @@ meta.ui=(function(){
 			+'<div id="aa"/></br>'
 			+'<span id="result"> </span>'
 			+'</div>';		
-		$('#wrapper').append(content)
+		$container.append(content);
+		/*$('#wrapper').append(content)*/
 		$('#start_num').after(meta.component.input({
 			type : 'text' , 
 			id : 'start_num_text',
