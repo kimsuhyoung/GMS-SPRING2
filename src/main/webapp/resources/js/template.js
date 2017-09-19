@@ -62,6 +62,18 @@ var introUI={
 		    +'<a id="logout" style="color: white">로그아웃</a></span>'
 		    +'</div>'
 		    +'</nav>'
+		},
+		loginView : (x)=>{
+			return'<div id="container" style="margin-top:100px">'
+			+'<form id="login_box" name="login_box" > '
+			+'<img src="'+x+'/login.jpg" alt="" /><br />'
+			+'<div style="font-size: 15px;width: 200px; height: 20px; margin: 0 auto;color: red;"></div>'
+			+'<span id="login_id">ID</span>'
+			+'<input type="text" id="input_id" name="id" value="mem1"/> <br />'
+			+'<span id="login_pass">PASSWORD</span>'
+			+'<input type="text" id="input_pass" name="pass" value="1"/> <br /><br />'
+			+'</form>'
+			+'</div>';
 		}
 };
 var algoUI = {

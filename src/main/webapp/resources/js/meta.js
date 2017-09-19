@@ -33,7 +33,11 @@ meta.index=(function(){
 		$('#button').click(()=>{//펑션을 이벤트핸들러 또는 콜백 함수라고 한다.
 			alert('화면이 지워집니다.');
 			$container.empty();
-			/*meta.auth.init();*/
+			meta.auth.init();
+			$.getScript(temp,()=>{
+				$('#login_box').append(compUI.input({type : 'button', id : 'login_btn', value : '로그인'}));
+				$('#login_box').append(compUI.input({type : 'reset', id : 'cancel_btn', value : '취소'}));
+			$('#login_btn').on('click',function(){			
 			meta.ui.navbar();
 			meta.navbar.init();
 			$.getScript(temp,()=>{
@@ -59,11 +63,13 @@ meta.index=(function(){
 					$('#algo_button').on('click',function(){					
 						$.getScript(algo,(x1,x2)=>{
 						$('#result').text('결과값 : ' + series.arithmetic($('#start_num_text').val(),$('#last_num_text').val()));	
+						});
 					});				
 				});								
 			});				
 		});																
 	});
+});			
 };
 	
 	var setContentView=function(){
@@ -90,8 +96,11 @@ meta.index=(function(){
 })();
 
 meta.auth=(function(){
-	var $wrapper,$ctx,$css,$img,$js
+	var $wrapper,ctx,css,img,js,temp,$container;
 	var init=function(){
+		js=$$('j');
+		temp=js+'/template.js';
+		$container=$('#container');
 		onCreate();
 	};
 	var onCreate=function(){
@@ -99,34 +108,28 @@ meta.auth=(function(){
 	};
 	var setContentView=function(){
 		$wrapper=$('#wrapper');
-		$ctx=$$('x');
-		$css=$$('c');
-		$img=$$('i');
-		$js=$$('j');
+		ctx=$$('x');
+		css=$$('c');
+		img=$$('i');
+		js=$$('j');
 		loginView();
 	};
 	var loginView=function(){
 		alert('로그인화면');
 		
-		var $container=
-			'<div id="container" style="margin-top:100px">'
-			+'<form id="login_box" name="login_box" > '
-			+'<img src="'+$img+'/login.jpg" alt="" /><br />'
-			+'<div style="font-size: 15px;width: 200px; height: 20px; margin: 0 auto;color: red;"></div>'
-			+'<span id="login_id">ID</span>'
-			+'<input type="text" id="input_id" name="id" value="mem1"/> <br />'
-			+'<span id="login_pass">PASSWORD</span>'
-			+'<input type="text" id="input_pass" name="pass" value="1"/> <br /><br />'
-			+'</form>'
-			+'</div>';
-		$wrapper.append($container);
-		$('#login_box').append(meta.component.input({type : 'submit', id : 'login_btn', value : '로그인'}))
-	    $('#login_box').append(meta.component.input({type : 'reset', id : 'cancel_btn', value : '취소'}))//돔에다가 돔을 연결할때 쓰는 문법
-		//동적 ui를 쓰려면 펑션의 파라미터 값을 제이슨으로 던져서 유동적으로 처리한다.
+		$.getScript(temp,()=>{
+			$container.html(introUI.loginView(img));			
+			/*$('#login_box').append(meta.component.input({type : 'submit', id : 'login_btn', value : '로그인'}))
+		    $('#login_box').append(meta.component.input({type : 'reset', id : 'cancel_btn', value : '취소'}))*///돔에다가 돔을 연결할때 쓰는 문법
+			//동적 ui를 쓰려면 펑션의 파라미터 값을 제이슨으로 던져서 유동적으로 처리한다.
+		});
+
+		
+		
 	};
 	return {
 		init : init
-		
+			
 	};
 })();
 
