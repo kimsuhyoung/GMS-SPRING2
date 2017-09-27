@@ -3,7 +3,52 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.gms.web.mapper.BoardMapper">
-  <select id="selectById" resultType="com.gms.web.board.ArticleDTO">
-    select * from Board where article_seq = #{article_seq}
-  </select>
+	<resultMap id="respMap" type="com.gms.web.command.RespMap">
+		<id property="seq" column="resp"/>
+		<result property="count" column="count"/>
+		<result property="id" column="id"/> 
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="regdate" column="regdate"/>
+		<result property="hitcount" column="hitcount"/>
+		<result property="email" column="email"/>
+		<result property="profile" column="profile"/>
+		<result property="birthday" column="birthday"/>
+		<result property="gender" column="gender"/>
+		<result property="count" column="count"/>
+	</resultMap>
+
+	<resultMap id="article" type="com.gms.web.board.Article"><!-- 한개의 빈객체만 사용할 때  -->
+		<id property="articleSeq" column="article_seq"/> <!-- 기본키를 넣어야 한다  -->
+		<result property="id" column="id"/> <!-- 프로퍼티는 빈객체의 프로퍼티와 이름을 맞추고  -->
+		<result property="title" column="title"/><!-- 컬럼은 db테이블 컬럼과 이름을 맞춘다.  -->
+		<result property="content" column="content"/><!-- 자바스크립트에서 호출할땐 프로퍼티값과 이름을 맞추어준다.   -->
+		<result property="regdate" column="regdate"/>
+		<result property="hitcount" column="hitcount"/>
+	</resultMap>
+
+ 	<insert id="insert" parameterType="com.gms.web.command.Command">
+		
+	</insert>
+
+	<select id="selectList" resultMap="article" parameterType="com.gms.web.command.Command" >
+    select * from board;
+ 	</select>
+
+ 	<select id="selectOne" resultMap="article"
+ 	parameterType="com.gms.web.command.Command"><!-- 타입은 풀경로 맵은 알리아스  -->
+	 select * from board where article_seq like #{search};
+  	</select>
+  
+ 	<update id="update" parameterType="com.gms.web.command.Command">
+ 	update board set content=#{action}, title=#{column} where article_seq=#{search}
+ 	</update> 
+  	
+  	<select id="count" parameterType="com.gms.web.command.Command"
+  	resultMap="respMap">
+  	select count(*) as count from board; <!--  위쪽에 맵에 있는 컬럼이랑 이름을 맞추기 위해 알리아스를 써얗 -->
+  	</select>
+<delete id="delete" parameterType="com.gms.web.command.Command">
+	
+</delete> 
 </mapper>

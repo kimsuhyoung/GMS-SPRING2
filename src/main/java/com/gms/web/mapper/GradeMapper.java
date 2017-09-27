@@ -4,10 +4,18 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+import com.gms.web.board.Article;
+import com.gms.web.command.Command;
 import com.gms.web.grade.MajorDTO;
 import com.gms.web.grade.SubjectDTO;
 
 @Repository
 public interface GradeMapper {
 	public int insertMajor(List<?> list);
+	public void insert(Command cmd);
+	public List<Article> selectSome(Command cmd);
+	public Article selectOne(Command cmd);
+	public String count(Command cmd);
+	public void update(Command cmd);
+	public void delete(Command cmd);
 }

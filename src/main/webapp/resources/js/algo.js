@@ -62,3 +62,44 @@ switchSeries : ()=>{
 		return newnum;
 	}
 }
+var sort={
+	selection : (x)=>{
+		alert(x);
+		var size=x.length;
+		var temp,min,cup;
+		
+		for(var i=0; i<size-1; i++){ // size-1 : 마지막 요소는 자연스럽게 정렬됨
+            min = i;
+            for(var j=i+1; j<size; j++){
+                if(x[min] > x[j]){
+                    min = j;
+                }
+            }
+            temp = x[min];
+            x[min] = x[i];
+            x[i] = temp;
+        }
+		return x;
+	},
+	burble : (x)=>{
+		alert(x);
+		   var temp = 0; 
+	          for(var i = 0; i < x.length - 1; i++){ 
+	              for(var j = 0; j < e.length - 1 - i; j++){ 
+	                 
+	                  if(x[j]*1 > x[j+1]*1){ 
+	                      temp = x[j]; 
+	                      x[j] = x[j+1]; 
+	                      x[j+1] = temp;                                      
+	                  } 
+	              } 
+	          } 
+	         return x;
+	},
+	insertion : ()=>{
+		alert(x);
+	},
+	ranking : ()=>{
+		alert(x);
+	},
+}

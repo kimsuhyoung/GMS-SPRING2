@@ -1,15 +1,15 @@
 var meta=meta || {}
 
-meta.common=(function(){
-	var init=function(ctx){
+meta.common=(()=>{
+	var init=(ctx)=>{
 		onCreate();
 		meta.session.init(ctx);
 		meta.index.init();
 	};
-	var onCreate=function(){
+	var onCreate=()=>{
 		setContentView();
 	};
-	var setContentView=function(){
+	var setContentView=()=>{
 		
 	};
 	return {
@@ -18,27 +18,44 @@ meta.common=(function(){
 	};
 })();
 
-meta.index=(function(){
-	var $image,$navbar,$container,ctx,img,js,css,temp,algo;
-	var init=function(){
+meta.index=(()=>{
+	var $wrapper,$image,$navbar,$container,ctx,img,js,css,temp,algo;
+	var init=()=>{
+		$container=$('#container');
+		$wrapper=$('#wrapper');
+		$navbar=$('#navbar');
+		ctx=$$('x');
+		css=$$('c');
+		img=$$('i');
 		js=$$('j');
 		temp=js+'/template.js';
 		algo=js+'/algo.js';
 		onCreate();
-		meta.ui.init();
+		/*meta.ui.init();*/
 	};
 		
-	var onCreate=function(){	
-		setContentView();
-		$('#button').click(()=>{//펑션을 이벤트핸들러 또는 콜백 함수라고 한다.
+	var onCreate=()=>{	
+		$.getScript(temp,(x)=>{
+			var $image=$('<img/>',introUI.loading(img))
+			$container.append(compUI.div('content')).css({'width':'100%'});
+			$('#content').css({'width':'50%','margin':'0 auto'}).append($image);
+			/*$image=$('<img/>',{id: 'loading', src: $img+'/loading.gif'});//제이슨은 키값과 밸류값을 같는다 키값에는 아이디,태그등을 넣어주고//어트리뷰트는 기성품(이미만들어짐) 프로퍼티는 값이 할당되기 전까지는 모른다.*/				    			
+			/*var $button=$('<input/>',{id: 'button', type:'button', value:'클릭'})		
+			$('#wrapper').empty // empty는 화면을 지우는 메서드			
+			$image.appendTo($('#wrapper'));//appendTo 는 리턴하는 것이다.
+			$button.appendTo($('#container'));*/
+			 $('#loading').after(compUI.h1('h-btn'));
+	         $('#h-btn').append(compUI.span('btn')).attr('display','inline');
+	         $('#btn').html('알고리즘').addClass('label label-default');
+	         $('#h-btn').append(compUI.span('btn2')).attr('display','inline');
+	         $('#btn2').html('회원관리').addClass('label label-primary').css({'magin-left':'10px'});
+	         $('#h-btn').append(compUI.span('btn3')).attr('display','inline');
+	         $('#btn3').html('게시판').addClass('label label-success').css({'magin-left':'10px'});
+		$('#btn').click(()=>{//펑션을 이벤트핸들러 또는 콜백 함수라고 한다.
 			alert('화면이 지워집니다.');
 			$container.empty();
-			meta.auth.init();
-			$.getScript(temp,()=>{
-				$('#login_box').append(compUI.input({type : 'button', id : 'login_btn', value : '로그인'}));
-				$('#login_box').append(compUI.input({type : 'reset', id : 'cancel_btn', value : '취소'}));
-			$('#login_btn').on('click',function(){			
-			meta.ui.navbar();
+			
+			/*meta.ui.navbar();*/
 			meta.navbar.init();
 			$.getScript(temp,()=>{
 				$('#container').html(algoUI.series());
@@ -60,53 +77,51 @@ meta.index=(function(){
 					}));		
 					$('#start_num_text').val('1');
 					$('#last_num_text').val('100');
-					$('#algo_button').on('click',function(){					
+					$('#algo_button').on('click',()=>{					
 						$.getScript(algo,(x1,x2)=>{
 						$('#result').text('결과값 : ' + series.arithmetic($('#start_num_text').val(),$('#last_num_text').val()));	
-						});
-					});				
-				});								
-			});				
-		});																
+					});									
+				});				
+			});																
+		});
 	});
-});			
+		
+				$('#btn2').click(()=>{
+					meta.auth.init();
+					$.getScript(temp,()=>{
+						$('#login_box').append(compUI.input({type : 'button', id : 'login_btn', value : '로그인'}));
+						$('#login_box').append(compUI.input({type : 'reset', id : 'cancel_btn', value : '취소'}));
+					$('#login_btn').click(()=>{
+						
+						});				
+						});		
+				});				
+				$('#btn3').click(()=>{					
+					alert('게시판 가기');
+					/*location.href=ctx+'/get/board/list'//중간에 get은 레스트풀방식 원래는 생략가능*/
+					meta.board.list();
+					});
+});
 };
 	
-	var setContentView=function(){
-		$container=$('#container');
-		/*$wrapper=$('#wrapper');*/
-		ctx=$$('c');
-		img=$$('i');
-		$.getScript(temp,(x)=>{
-		var $image=$('<img/>',
-				introUI.loading(img))
-				$container.append($image);
-			/*$image=$('<img/>',{id: 'loading', src: $img+'/loading.gif'});//제이슨은 키값과 밸류값을 같는다 키값에는 아이디,태그등을 넣어주고//어트리뷰트는 기성품(이미만들어짐) 프로퍼티는 값이 할당되기 전까지는 모른다.*/				    
-		});
-		var $button=$('<input/>',{id: 'button', type:'button', value:'클릭'})		
-		/*$('#wrapper').empty*/ // empty는 화면을 지우는 메서드
-		
-		/*$image.appendTo($('#wrapper'));*///appendTo 는 리턴하는 것이다.
-		$button.appendTo($('#container'));
-	};
 	return {
 		init : init
 		
 	};
 })();
 
-meta.auth=(function(){
+meta.auth=(()=>{
 	var $wrapper,ctx,css,img,js,temp,$container;
-	var init=function(){
+	var init=()=>{
 		js=$$('j');
 		temp=js+'/template.js';
 		$container=$('#container');
 		onCreate();
 	};
-	var onCreate=function(){
+	var onCreate=()=>{
 		setContentView();
 	};
-	var setContentView=function(){
+	var setContentView=()=>{
 		$wrapper=$('#wrapper');
 		ctx=$$('x');
 		css=$$('c');
@@ -114,7 +129,7 @@ meta.auth=(function(){
 		js=$$('j');
 		loginView();
 	};
-	var loginView=function(){
+	var loginView=()=>{
 		alert('로그인화면');
 		
 		$.getScript(temp,()=>{
@@ -133,15 +148,163 @@ meta.auth=(function(){
 	};
 })();
 
-meta.navbar=(function(){
+meta.board=(()=>{
+	var ctx,js,temp,$container,$navbar;
+	var init=()=>{
+		ctx=$$('x');
+		js=$$('j');
+		temp=js+'/template.js';
+		$container=$('#container');
+		$navbar=$('#navbar');
+	};
+	var write =()=>{
+		init();
+		$.getScript(temp,()=>{
+			$('#content').empty();
+			$('#content').html(boardUI.detail())
+			$('#confirmBtn').html('수정').click((e)=>{
+				e.preventDefault();//서버로 값을 넘기는걸 막는 역할
+				detail();
+				});
+		});
+	};
+	var list=x=>{
+		init();
+		var url=ctx+'/list/articles';
+		$.getJSON(url,data=>{//x는 자바에서 던져준 객체다
+			$.getScript(temp,()=>{
+			var tb1=boardUI.boardList();
+		/*		var a=[
+					{a : 1,b : '한국인사',c : '안녕',d : '길동',e : '2017-09-10',f : 10},
+					{a : 2,b : '미국인사',c : 'hello',d : 'james',e : '2017-09-11',f : 30},
+					{a : 3,b : '일본인사',c : '곤니치와',d : '와카베',e : '2017-09-12',f : 40},
+					{a : 4,b : '중국인사',c : '니하오',d : '권쯔',e : '2017-09-14',f : 50	},
+					{a : 5,b : '프랑스인사',c : '봉주르',d : '하와이',e : '2017-09-15',f : 60}
+				];*/
+									
+				var tr="";
+				$.each(data.list,(i,j)=>{
+						tr+='<tr style="height: 25px;">'//맵퍼.xml에 적힌 프로퍼티 이름을 가져다 넣어준다.
+						+'<td>'+j.articleSeq+'</td>'
+						+'<td><a onclick="meta.board.detail('+j.articleSeq+')">'+j.title+'</a></td>'
+						+'<td>'+j.content+'</td>'
+						+'<td>'+j.id+'</td>'
+						+'<td>'+j.regdate+'</td>'
+						+'<td>'+j.hitcount+'</td>'
+						+'</tr>';
+				});
+				console.log('tr : '+tr);
+				$('#content').empty();
+				$('#content').html(boardUI.search());
+				$('#content').append(boardUI.boardList());
+				$('#count').append(data.count.count+'개');//스트링으로 할땐 카운트 까지만 해도 되는데 respmap으로 타입이 바뀌어서 그안에 카운트 까지 가야한다.
+				$('#content').append(boardUI.pagenation());
+				$('#tbody').html(tr);
+				$('#writeBtn').click((e)=>{
+					meta.board.write();
+				});
+				
+			});
+			/*$container.empty();
+			meta.auth.init();*/
+		});
+	};
+	var detail =x=>{
+		init();
+		alert('넘어온 시퀀스 : '+x);
+		$.getJSON(ctx+'/get/articles/'+x,data=>{
+			alert('data 값 : '+data.test)
+		$.getScript(temp,(x)=>{
+		$container.empty();
+		$container.append(compUI.div('content'));
+		$('#content').html(boardUI.detail());
+		$('#header').html('게시글 보기');
+		$('#regdate').text('작성일 : '+data.detail.regdate);
+		$('#fname').val(data.detail.title);
+		$('#lname').val(data.detail.id);
+		$('#message').val(data.detail.content);
+		var _seq=data.detail.article_seq
+		var _title=$('#fname').val();
+		var _writer=$('#lname').val();
+		var _message=$('#message').val();
+		
+		$('#confirmBtn').html('수정').click((e)=>{
+			e.preventDefault();//서버로 값을 넘기는걸 막는 역할
+			$('#header').html('게시글 수정하기');
+			$('#confirmBtn').html('확인').attr('id','updateBtn').click(e=>{
+				e.preventDefault();
+				$.ajax({
+					url : ctx+'/put/articles',
+					method : 'post',
+					dataType : 'json',
+					data : JSON.stringify({
+						'articleSeq':_seq,
+						'title':_title,
+						'id' :_writer,
+						'content':_message
+						
+					}),
+					contentType : 'application/json',
+					success : d=>{
+						alert('ajax 통신 성공 메세지 : '+d.msg);
+						detail(d.seq.articleSeq);
+						},
+					error : (x,s,m)=>{
+						alert('글 수정시 에러발생'+m);
+					}
+				});
+			});
+			$('#cancelBtn').html('취소').attr('id','resetBtn').attr('type','reset').removeAttr('data-toggle').removeAttr('data-target').click(e=>{
+				alert('취소');
+			});
+			});
+	   $('#cancelBtn')
+       .attr('data-toggle','modal')
+       .attr('data-target','#modal')
+       .addClass('btn btn-primary')
+       .html('삭제하기')
+       .click(e=>{
+          e.preventDefault(); 
+       /*  deleteArticle(x+','+pass);*/
+       });
+	   
+	});
+		})
+		
+	};
+	var update =(x)=>{
+		alert('update');
+		$('#header').html('게시글 수정하기');
+		$('#confirmBtn').html('확인').click(e=>{
+			e.preventDefault();
+			detail(x);
+			
+		});
+		 
+	}
+	var deleteArticle=(x)=>{
+		alert('delete');
+		
+	};
+
+	return {
+		detail : detail,
+		write : write,
+		deleteArticle : deleteArticle,
+		update : update,
+		list : list
+		}
+})();
+
+meta.navbar=(()=>{
 	var algo,js,temp;
-	var init=function(){
+	var init=()=>{
 		js=$$('j');
 		algo=js+'/algo.js';
 		temp=js+'/template.js';
 		onCreate();
 	};
-	var onCreate=function(){
+	var onCreate=()=>{
 		$.getScript(temp,()=>{			
 			$('#navbar').html(introUI.navbar());		
 		var $u1=$("#navbar_ul_stu");
@@ -153,75 +316,75 @@ meta.navbar=(function(){
 		var $home=$('#home');
 		var $logout=$('#logout')
 				
-		$('.dropdown-menu a').eq(0).on('click',function(){
+		$('.dropdown-menu a').eq(0).click(()=>{
 			alert('0');
 			/*app.controller.moveTo('member','member_add');*/
 			/*location.href=app.path.ctx()+"/member/add";*/
 		});
-		$('.dropdown-menu a').eq(1).on('click',function(){
+		$('.dropdown-menu a').eq(1).click(()=>{
 			alert('1');
 			/*app.member.list(1);*/
 			/*location.href=app.path.ctx()+"/member/list";*/
 			/*controller.list('member','member_list','1');*/
 		});
-		$('.dropdown-menu a').eq(2).on('click',function(){
+		$('.dropdown-menu a').eq(2).click(()=>{
 			alert('2');
 			/*app.controller.moveTo('member','member_detail');*/
 			/*location.href=app.path.ctx()+"/member/detail";*/
 			/*controller.moveTo('member','member_detail');*/
 		});
-		$('.dropdown-menu a').eq(3).on('click',function(){
+		$('.dropdown-menu a').eq(3).click(()=>{
 			alert('3');
 			/*app.controller.deleteTarget(prompt('삭제할 ID를 입력하세요'),'member','member_list');*/
 			/*location.href=app.path.ctx()+"/member/delete";*/
           /*controller.deleteStudent();*/
 		});
-		$('.dropdown-menu a').eq(4).on('click',function(){
+		$('.dropdown-menu a').eq(4).click(()=>{
 			alert('4');
 			/*app.controller.moveTo('grade','grade_add');*/
 			/*location.href=app.path.ctx()+"/grade/add";*/
 		});
-		$('.dropdown-menu a').eq(5).on('click',function(){
+		$('.dropdown-menu a').eq(5).click(()=>{
 			alert('5');
 			/*app.controller.moveTo('grade','grade_list');*/
 			/*location.href=app.path.ctx()+"/grade/list";*/
 			/*controller.list('member','member_list','1');*/
 		});
-		$('.dropdown-menu a').eq(6).on('click',function(){
+		$('.dropdown-menu a').eq(6).click(()=>{
 			alert('6');
 			/*app.controller.moveTo('grade','grade_detail');*/
 			/*location.href=app.path.ctx()+"/grade/detail";*/
 			/*controller.moveTo('member','member_detail');*/
 		});
-		$('.dropdown-menu a').eq(7).on('click',function(){
+		$('.dropdown-menu a').eq(7).click(()=>{
 			alert('7');
 			/*app.controller.deleteTarget(prompt('삭제할 성적을 가진 ID를 입력하세요'),'grade','grade_list');*/
 			/*location.href=app.path.ctx()+"/grade/delete";*/
           /*controller.deleteStudent();*/
 		});
-		$('.dropdown-menu a').eq(8).on('click',function(){
+		$('.dropdown-menu a').eq(8).click(()=>{
 			alert('8');
 			/*app.controller.moveTo('board','board_write');*/
 			/*location.href=app.path.ctx()+"/board/write";*/
 		});
-		$('.dropdown-menu a').eq(9).on('click',function(){
+		$('.dropdown-menu a').eq(9).click(()=>{
 			alert('9');
 			/*app.controller.moveTo('board','board_list');*/
 			/*location.href=app.path.ctx()+"/board/list";*/
 			/*controller.list('member','member_list','1');*/
 		});
-		$('.dropdown-menu a').eq(10).on('click',function(){
+		$('.dropdown-menu a').eq(10).click(()=>{
 			alert('10');
 			/*app.controller.moveTo('board','board_detail');*/
 			/*location.href=app.path.ctx()+"/board/detail";*/
 		});
-		$('.dropdown-menu a').eq(11).on('click',function(){
+		$('.dropdown-menu a').eq(11).click(()=>{
 			alert('11');
 			/*app.controller.deleteTarget(prompt('삭제할 게시글을 가진 ID를 입력하세요'),'board','board_list');*/
 			/*location.href=app.path.ctx()+"/board/delete";*/
           /*controller.deleteStudent();*/
 		});
-		$('#arithBtn').on('click',function(){
+		$('#arithBtn').click(()=>{
 			alert('등차수열 클릭');
 			$('#content').remove();
 			$.getScript(temp,()=>{
@@ -254,7 +417,7 @@ meta.navbar=(function(){
 				});			
 			});		
 		});
-		$('#switchBtn').on('click',function(){
+		$('#switchBtn').click(()=>{
 			alert('스위치수열 클릭');
 			$('#container').empty();
 			/*$('#content').remove();*/
@@ -295,7 +458,7 @@ meta.navbar=(function(){
 				});	
 			});
 		});
-		$('#geoBtn').on('click',function(){
+		$('#geoBtn').click(()=>{
 			alert('등비수열 클릭');
 			$('#container').empty();
 			$.getScript(temp,()=>{
@@ -328,7 +491,7 @@ meta.navbar=(function(){
 			});
 		});		
 	});
-		$('#facBtn').on('click',function(){
+		$('#facBtn').click(()=>{
 			alert('팩토리얼 클릭');
 			$('#container').empty();
 			$.getScript(temp,()=>{
@@ -361,7 +524,7 @@ meta.navbar=(function(){
 		});
 	});
 });
-		$('#fiboBtn').on('click',function(){
+		$('#fiboBtn').click(()=>{
 			alert('피보나치수열 클릭');
 		$('#container').empty();
 		$.getScript(temp,()=>{
@@ -395,13 +558,131 @@ meta.navbar=(function(){
 			});
 		});		
 	});
-		$('#home a').on('click',function(){
+		$('#selBtn').click(()=>{
+			alert('선택정렬 클릭');
+			$('#content').remove();
+			var index=-1;
+			$.getScript(temp,()=>{
+				var array=new Array();
+				$('#container').html(algoUI.sort());
+				$.getScript(temp,()=>{
+					$('#start_num').append(compUI.input({
+						type : 'text' , 
+						id : 'sort_text',
+						placeholder : '숫자를 하나씩 입력하세요'
+					}));
+					$('#aa').append(compUI.input({
+						type : 'button',
+						id : 'sort_button',
+						value : '숫자입력'
+					}));	
+					$('#sort_button').click(()=>{
+						index++;
+						array[index]=$('#sort_text').val();
+						console.log(array);
+						$('#sort_text').val("");
+						if(index==4){
+							$.getScript(algo,()=>{
+								$('#result').text('결과값 : ' + sort.selection(array));
+							});			
+						}
+					
+					});
+				});			
+			});		
+		});
+		$('#burbleBtn').click(()=>{
+			alert('버블정렬 클릭');
+			$('#content').remove();
+			$.getScript(temp,()=>{
+				var index=-1;
+				var array=new Array();
+				$('#container').html(algoUI.sort());
+				$('h1').html('버블정렬');
+				$.getScript(temp,()=>{
+					$('#start_num').append(compUI.input({
+						type : 'text' , 
+						id : 'sort_text',
+						placeholder : '숫자를 하나씩 입력하세요'
+					}));
+					$('#aa').append(compUI.input({
+						type : 'button',
+						id : 'sort_button',
+						value : '숫자입력'
+					}));	
+					
+					$('#sort_button').click(()=>{
+						index++;
+						array[index]=$('#sort_text').val();
+						console.log(array);
+						$('#sort_text').val("");
+						if(index==4){
+						$.getScript(algo,()=>{
+							$('#result').text('결과값 : ' + sort.burble(array));
+						});				
+						}
+					});
+				});			
+			});		
+		});
+		$('#insertBtn').click(()=>{
+			alert('삽입정렬 클릭');
+			$('#content').remove();
+			$.getScript(temp,()=>{
+				$('#container').html(algoUI.sort());
+				$('h1').html('삽입정렬');
+				$.getScript(temp,()=>{
+					$('#start_num').append(compUI.input({
+						type : 'text' , 
+						id : 'sort_text',
+						placeholder : '숫자를 하나씩 입력하세요'
+					}));
+					$('#aa').append(compUI.input({
+						type : 'button',
+						id : 'sort_button',
+						value : '숫자입력'
+					}));	
+					
+					$('#sort_button').click(()=>{					
+						$.getScript(algo,()=>{
+							$('#result').text('결과값 : ' + sort.insertion());
+						});				
+					});
+				});			
+			});		
+		});
+		$('#rankBtn').click(()=>{
+			alert('석차구하기 클릭');
+			$('#content').remove();
+			$.getScript(temp,()=>{
+				$('#container').html(algoUI.sort());
+				$('h1').html('석차구하기');
+				$.getScript(temp,()=>{
+					$('#start_num').append(compUI.input({
+						type : 'text' , 
+						id : 'sort_text',
+						placeholder : '숫자를 하나씩 입력하세요'
+					}));
+					$('#aa').append(compUI.input({
+						type : 'button',
+						id : 'sort_button',
+						value : '숫자입력'
+					}));	
+					$('#sort_button').click(()=>{					
+						$.getScript(algo,()=>{
+							$('#result').text('결과값 : ' + sort.ranking());
+						});				
+					});
+				});			
+			});		
+		});
+		$('#home a').click(()=>{
 			alert('home');
 			app.controller.moveTo('common','main');
 			/*location.href=app.path.ctx()+"/auth/main";*/
 		});
 		
-		$('#logout').on('click',function(){
+		$('#logout').click(()=>{
 			alert('logout');
 			app.controller.moveTo('common','login');
 			/*location.href=app.path.ctx()+"/auth/main";*/
@@ -414,15 +695,15 @@ meta.navbar=(function(){
 	};
 })();
 
-meta.ui=(function(){
+/*meta.ui=(()=>{
 	var $wrapper,$ctx,$css,$img,$js,$container,$navbar;
-	var init=function(){
+	var init=()=>{
 		$wrapper=$('#wrapper');$ctx=$$('x');$css=$$('c');$img=$$('i');$js=$$('j');$navbar=$('#navbar');$container=$('#container');
 	};
-	var navbar= function(){//dom객체에서 append(dom에 dom을 붙이는것),html(html코딩과 같다) 
+	var navbar= ()=>{//dom객체에서 append(dom에 dom을 붙이는것),html(html코딩과 같다) 
 
 	}
-/*	var arithmetic=function(){
+	var arithmetic=function(){
 		1부터 100까지 등차수열의 합
 		$('#wrapper').append(content)
 
@@ -441,33 +722,33 @@ meta.ui=(function(){
 			id : 'algo_button',
 			value : '연산하기'
 		}));
-	};*/
+	};
 	
 	return {
 		init : init,
-		/*arithmetic : arithmetic,*/
+		arithmetic : arithmetic,
 		navbar : navbar
 	};
-})();
+})();*/
 
 
 meta.session=
 	{
-	init : function(ctx){
+	init : (ctx)=>{
 		sessionStorage.setItem('x',ctx);
 		sessionStorage.setItem('j',ctx+'/resources/js');
 		sessionStorage.setItem('i',ctx+'/resources/img');
 		sessionStorage.setItem('c',ctx+'/resources/css'); 
 	},
 	
-	getPath : function(x){
+	getPath : (x)=>{
 		return sessionStorage.getItem(x)
 	}
 	};
 	
 
 
-var $$=function(x){return meta.session.getPath(x);};
+var $$=(x)=>{return meta.session.getPath(x);};
 
 
 
