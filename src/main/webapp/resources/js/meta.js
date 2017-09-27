@@ -220,18 +220,22 @@ meta.board=(()=>{
 		$('#content').html(boardUI.detail());
 		$('#header').html('게시글 보기');
 		$('#regdate').text('작성일 : '+data.detail.regdate);
-		$('#fname').val(data.detail.title);
-		$('#lname').val(data.detail.id);
-		$('#message').val(data.detail.content);
-		var _seq=data.detail.article_seq
-		var _title=$('#fname').val();
-		var _writer=$('#lname').val();
-		var _message=$('#message').val();
-		
+		$('#fname').val(data.detail.title).attr('readonly','true');
+		$('#lname').val(data.detail.id).attr('readonly','true');
+		$('#message').val(data.detail.content).attr('readonly','true');
+			
 		$('#confirmBtn').html('수정').click((e)=>{
 			e.preventDefault();//서버로 값을 넘기는걸 막는 역할
+			$('#fname').removeAttr('readonly');
+			$('#message').removeAttr('readonly');
+			
 			$('#header').html('게시글 수정하기');
 			$('#confirmBtn').html('확인').attr('id','updateBtn').click(e=>{
+				
+				var _seq=data.detail.articleSeq;
+				var _title=$('#fname').val();
+				var _writer=$('#lname').val();
+				var _message=$('#message').val();
 				e.preventDefault();
 				$.ajax({
 					url : ctx+'/put/articles',
@@ -247,7 +251,8 @@ meta.board=(()=>{
 					contentType : 'application/json',
 					success : d=>{
 						alert('ajax 통신 성공 메세지 : '+d.msg);
-						detail(d.seq.articleSeq);
+						alert('시퀀스 번호 : '+_seq);
+						detail(_seq);
 						},
 					error : (x,s,m)=>{
 						alert('글 수정시 에러발생'+m);
@@ -264,14 +269,46 @@ meta.board=(()=>{
        .addClass('btn btn-primary')
        .html('삭제하기')
        .click(e=>{
-          e.preventDefault(); 
-       /*  deleteArticle(x+','+pass);*/
+    	  $('#confirmPass').click(e=>{
+          e.preventDefault();
+          var _pass= $('#userPass').val();
+          var _seq=data.detail.articleSeq;
+          var _id=data.detail.id;
+          alert('넘어온 시퀀스와  비번 : '+_seq+','+_pass);   
+
+          $.ajax({
+              url : ctx+'/delete/articles/',
+              method : 'post',
+              dataType: 'json',
+              data : JSON.stringify({
+                 'articleSeq' : _seq,
+                 'regdate' : _pass,
+                 'id' : _id
+                 //자바 프로퍼티와 일치 시켜줘야함
+              }),
+              contentType : 'application/json',
+              success : d=>{
+                 if(d.result==='success'){
+                    alert('ajax 통신 성공');
+                    list();
+                    $('.modal-backdrop fade in').remove();
+                    
+                 }else{
+                    alert('ajax 통신 실패');
+                 };
+                 
+                 
+              },
+              error : (x,s,m)=>{
+					alert('글 수정시 에러발생'+m);
+				}       	       	  
+          });
+    	  });
        });
-	   
+       });	   
 	});
-		})
-		
-	};
+}
+
 	var update =(x)=>{
 		alert('update');
 		$('#header').html('게시글 수정하기');
@@ -283,8 +320,7 @@ meta.board=(()=>{
 		 
 	}
 	var deleteArticle=(x)=>{
-		alert('delete');
-		
+		alert('delete');		
 	};
 
 	return {

@@ -32,7 +32,7 @@
   
  <select id="selectById" resultType="com.gms.web.member.StudentDTO"
  parameterType="com.gms.web.command.CommandDTO" >
-	select * from student where id like #{id}
+	select * from student where id like #{search}
 
   </select>
   

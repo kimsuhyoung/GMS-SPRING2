@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import com.gms.web.command.Command;
 import com.gms.web.command.CommandDTO;
 import com.gms.web.member.MemberDTO;
 import com.gms.web.member.MemberService;
@@ -24,7 +25,7 @@ import com.gms.web.member.MemberService;
 @SessionAttributes("user")
 @RequestMapping("/auth")//컨트롤러를 결정
 public class AuthController {
-	@Autowired CommandDTO cmd;
+	@Autowired Command cmd;
 	@Autowired MemberService service;
 	@Autowired MemberDTO member;
 	private static final Logger logger = LoggerFactory.getLogger(AuthController.class);

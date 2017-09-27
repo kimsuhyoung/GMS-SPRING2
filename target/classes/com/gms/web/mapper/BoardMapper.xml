@@ -41,7 +41,7 @@
   	</select>
   
  	<update id="update" parameterType="com.gms.web.command.Command">
- 	update board set content=#{action}, title=#{column} where article_seq=#{search}
+ 	update board set content=#{action}, title=#{column} where article_seq=#{id}
  	</update> 
   	
   	<select id="count" parameterType="com.gms.web.command.Command"
@@ -49,6 +49,6 @@
   	select count(*) as count from board; <!--  위쪽에 맵에 있는 컬럼이랑 이름을 맞추기 위해 알리아스를 써얗 -->
   	</select>
 <delete id="delete" parameterType="com.gms.web.command.Command">
-	
+	delete from board where article_seq=#{seq};
 </delete> 
 </mapper>

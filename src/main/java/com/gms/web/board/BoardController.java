@@ -21,6 +21,10 @@ import com.gms.web.command.CommandDTO;
 import com.gms.web.command.RespMap;
 import com.gms.web.mapper.BoardMapper;
 import com.gms.web.mapper.GradeMapper;
+import com.gms.web.mapper.MemberMapper;
+import com.gms.web.member.MemberDTO;
+import com.gms.web.member.StudentDTO;
+import com.gms.web.service.IDeleteService;
 import com.gms.web.service.IGetService;
 import com.gms.web.service.IListService;
 import com.gms.web.service.IPostService;
@@ -31,6 +35,7 @@ import com.sun.corba.se.impl.protocol.BootstrapServerRequestDispatcher;
 public class BoardController {
      @Autowired BoardMapper bmapper;
      @Autowired GradeMapper gmapper;
+     @Autowired MemberMapper mmapper;
      @Autowired Command cmd;
      public @ResponseBody Map<?,?> post() {
     	 return null;
@@ -108,12 +113,38 @@ public class BoardController {
     		 bmapper.update(cmd);
     	 };
     	 update.execute(cmd);
-    	 map.put("seq", art.getArticleSeq());
+    	
     	 map.put("msg", "통신이 성공하였습니다");
     	
     	 return map;
      }
-     public @ResponseBody Map<?,?> delete() {
-    	 return null;
+     @RequestMapping(value="/delete/articles/",method=RequestMethod.POST, consumes="application/json")
+     public @ResponseBody Map<?,?> delete(@RequestBody Article art){
+        System.out.println("딜리트 진입");
+        IDeleteService deleteService=null;
+        IGetService memberInfo=null;
+        Map<String, Object>map = new HashMap<>();
+        cmd.setSearch(art.getId());
+        
+        memberInfo=x->{
+         return mmapper.selectById(cmd);
+        };
+        StudentDTO student=(StudentDTO) memberInfo.execute(cmd);
+        System.out.println("뷰에서 넘어온 비번: "+art.getRegdate());
+        System.out.println("디비에서 가져온 멤버 비번 : "+student.getPass());
+       
+        cmd.setSeq(String.valueOf(art.getArticleSeq()));
+        String result="";
+        if(art.getRegdate().equals(student.getPass())) {
+           result="success";
+           deleteService=x->{
+              bmapper.delete(cmd);
+           };
+           deleteService.execute(cmd);
+           }else{
+              result="false";
+           };
+        map.put("result", result);
+        return map;
      }
 }

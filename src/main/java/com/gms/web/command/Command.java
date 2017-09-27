@@ -11,7 +11,7 @@ import lombok.Data;
 @Lazy @Component @Data
 public class Command implements Commandable{
 	
-	protected String action,pageNumber,
+	protected String action,pageNumber,seq,
 		view,column,search,id,pass;	
 		
 	protected MemberDTO member;

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.gms.web.auth.HomeController;
+import com.gms.web.command.Command;
 import com.gms.web.command.CommandDTO;
 import com.gms.web.grade.GradeDTO;
 import com.gms.web.grade.MajorDTO;
@@ -29,7 +30,7 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired MemberDTO member;
 	@Autowired GradeMapper grade;
 	@Autowired MajorDTO major;
-	@Autowired CommandDTO cmd;
+	@Autowired Command cmd;
 	
 	@Override @Transactional
 	public int add(Map<?,?> map) {
@@ -71,17 +72,17 @@ public class MemberServiceImpl implements MemberService{
 		return result;
 	}*/
 	@Override
-	public List<?> list(CommandDTO cmd) {
+	public List<?> list(Command cmd) {
 		return mapper.selectAll(cmd);
 	}
 	@Override
-	public List<?> findByName(CommandDTO cmd) {
+	public List<?> findByName(Command cmd) {
 		System.out.println("findByName("+cmd.getSearch()+")");
 		return mapper.selectByName(cmd);
 	}
 
 	@Override
-	public StudentDTO findById(CommandDTO cmd) {
+	public StudentDTO findById(Command cmd) {
 		return mapper.selectById(cmd);
 	}
 
@@ -99,13 +100,13 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	@Override
-	public int remove(CommandDTO cmd) {
+	public int remove(Command cmd) {
 		
 		
 		return mapper.delete(cmd);
 	}
 	@Override
-	public Map<String,Object> login(CommandDTO cmd) {
+	public Map<String,Object> login(Command cmd) {
 		System.out.println("memberserviceimple LOGIN 진입!!!!");
 		System.out.println("넘겨진 아이디와 비밀번호::"+cmd.getId()+"////"+cmd.getPass());
 		Map<String,Object> map=new HashMap<>();

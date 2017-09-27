@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.stereotype.Repository;
 
+import com.gms.web.command.Command;
 import com.gms.web.command.CommandDTO;
 import com.gms.web.member.MemberDTO;
 import com.gms.web.member.StudentDTO;
@@ -13,12 +14,12 @@ import com.gms.web.member.StudentDTO;
 public interface MemberMapper {
 	/*public String insert(Map<?,?>map);*/
 	public int insert(MemberDTO member);
-	public List<?> selectAll(CommandDTO cmd);
+	public List<?> selectAll(Command cmd);
 	public List<?> selectByName(
-			CommandDTO cmd);
-	public StudentDTO selectById(CommandDTO cmd);
+			Command cmd);
+	public StudentDTO selectById(Command cmd);
 	public String count();
 	public int update(MemberDTO bean);
-	public int delete(CommandDTO cmd);
-	public MemberDTO login(CommandDTO cmd);
+	public int delete(Command cmd);
+	public MemberDTO login(Command cmd);
 }
